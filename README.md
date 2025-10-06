@@ -58,6 +58,9 @@ STRIPE_SECRET_KEY=sk_test_xxxxx
 
 # App URL
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Optional: Lock demo view (mobile or desktop)
+# NEXT_PUBLIC_DEMO_VIEW_LOCK=desktop
 ```
 
 ### Content Configuration
@@ -104,6 +107,8 @@ const DemoContent = () => (
   </div>
 );
 ```
+
+**Lock Demo View:** Set `NEXT_PUBLIC_DEMO_VIEW_LOCK=mobile` or `NEXT_PUBLIC_DEMO_VIEW_LOCK=desktop` to hide the toggle and force a specific view.
 
 ## Key Features
 
