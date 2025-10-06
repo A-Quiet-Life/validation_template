@@ -1,15 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import PhoneMockup from "@/components/PhoneMockup";
 import { Monitor, Smartphone } from "lucide-react";
 
 // Get locked view mode from environment variable
-const LOCKED_VIEW_MODE = process.env.NEXT_PUBLIC_DEMO_VIEW_LOCK as "mobile" | "desktop" | undefined;
+const LOCKED_VIEW_MODE = process.env.NEXT_PUBLIC_DEMO_VIEW_LOCK as
+  | "mobile"
+  | "desktop"
+  | undefined;
 
 export default function DemoPage() {
-  const [viewMode, setViewMode] = useState<"mobile" | "desktop">(LOCKED_VIEW_MODE || "desktop");
+  const [viewMode, setViewMode] = useState<"mobile" | "desktop">(
+    LOCKED_VIEW_MODE || "desktop"
+  );
   const isLocked = !!LOCKED_VIEW_MODE;
 
   // Demo content that will be shown in both views
@@ -87,34 +92,34 @@ export default function DemoPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <Navbar />
 
       <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
         {/* View Toggle - Only show if not locked */}
         {!isLocked && (
           <div className="flex justify-center mb-6">
-            <div className="inline-flex rounded-md border border-gray-300 bg-white p-0.5 shadow-sm">
+            <div className="inline-flex rounded-xl border border-gray-300 bg-white/60 backdrop-blur-md p-1 shadow-lg">
               <button
                 onClick={() => setViewMode("desktop")}
-                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-md transition-all text-sm ${
+                className={`flex items-center space-x-1.5 px-4 py-2 rounded-lg transition-all text-sm ${
                   viewMode === "desktop"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 }`}
               >
-                <Monitor size={14} />
+                <Monitor size={16} />
                 <span className="font-medium">Desktop</span>
               </button>
               <button
                 onClick={() => setViewMode("mobile")}
-                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-md transition-all text-sm ${
+                className={`flex items-center space-x-1.5 px-4 py-2 rounded-lg transition-all text-sm ${
                   viewMode === "mobile"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 }`}
               >
-                <Smartphone size={14} />
+                <Smartphone size={16} />
                 <span className="font-medium">Mobile</span>
               </button>
             </div>
@@ -124,7 +129,7 @@ export default function DemoPage() {
         {/* Content Display */}
         <div className="flex justify-center">
           {viewMode === "desktop" ? (
-            <div className="w-full max-w-7xl bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="w-full max-w-7xl bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden border border-white/20">
               <DemoContent />
             </div>
           ) : (

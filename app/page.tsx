@@ -3,8 +3,27 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import PricingCards from "@/components/PricingCards";
+import BenefitCard from "@/components/BenefitCard";
+import HowItWorksCard from "@/components/HowItWorksCard";
 import { siteConfig } from "@/config/site";
-import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Zap,
+  Shield,
+  Target,
+  Users,
+  TrendingUp,
+  Heart,
+  Sparkles,
+  CheckCircle,
+  Rocket,
+  ClipboardList,
+  Send,
+  BarChart,
+} from "lucide-react";
+import { Waitlist } from "@clerk/nextjs";
 
 export default function LandingPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -13,167 +32,268 @@ export default function LandingPage() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero / CTA Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 text-white">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
-          <div className="text-center max-w-3xl mx-auto space-y-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-              {siteConfig.landing.hero.title}
-            </h1>
-            <p className="text-xl sm:text-2xl text-blue-100">
-              {siteConfig.landing.hero.subtitle}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
-                href="#waitlist"
-                className="w-full sm:w-auto bg-white text-blue-700 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-xl"
-              >
-                {siteConfig.landing.hero.cta}
-              </a>
-              <Link
-                href={siteConfig.nav.demo}
-                className="w-full sm:w-auto bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors"
-              >
-                {siteConfig.landing.hero.secondaryCta}
-              </Link>
+      {/* Hero Section - Split Layout */}
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-blue-100 via-indigo-100/70 to-purple-100/80 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-blue-200/60 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-purple-200/50 via-transparent to-transparent"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Hero Text */}
+            <div className="space-y-8 animate-slide-in-left">
+              <div className="inline-flex items-center space-x-2 px-4 py-2 glass-effect rounded-full text-blue-700 text-sm font-medium shadow-lg">
+                <Sparkles size={16} />
+                <span>Validate before you build</span>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                {siteConfig.landing.hero.title}
+              </h1>
+
+              <p className="text-xl text-gray-600 leading-relaxed">
+                {siteConfig.landing.hero.subtitle}
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="#pricing"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                >
+                  See Plans
+                  <Rocket className="ml-2" size={20} />
+                </Link>
+                <a
+                  href="#waitlist"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg border-2 border-gray-300 hover:border-blue-500 hover:bg-gray-50 transition-all"
+                >
+                  Join Waitlist
+                  <Send className="ml-2" size={20} />
+                </a>
+              </div>
+
+              {/* Social Proof */}
+              <div className="flex items-center space-x-8 pt-4">
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">500+</div>
+                  <div className="text-sm text-gray-600">
+                    Products Validated
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">95%</div>
+                  <div className="text-sm text-gray-600">Success Rate</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Hero Box */}
+            <div className="relative animate-slide-in-right delay-200">
+              <div className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 rounded-3xl p-8 shadow-2xl transform lg:rotate-2 hover:rotate-0 transition-all duration-300 animate-float">
+                <div className="absolute inset-0 bg-grid-pattern opacity-10 rounded-3xl"></div>
+                <div className="relative space-y-6">
+                  <div className="glass-dark rounded-2xl p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="text-white" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-semibold mb-2">
+                          Fast Setup
+                        </h3>
+                        <p className="text-blue-100 text-sm">
+                          Launch your validation page in hours, not weeks
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="glass-dark rounded-2xl p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-purple-400 rounded-full flex items-center justify-center flex-shrink-0">
+                        <BarChart className="text-white" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-semibold mb-2">
+                          Real Data
+                        </h3>
+                        <p className="text-blue-100 text-sm">
+                          Get actual metrics on demand before building
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="glass-dark rounded-2xl p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Target className="text-white" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-semibold mb-2">
+                          Make Decisions
+                        </h3>
+                        <p className="text-blue-100 text-sm">
+                          Build what users actually want and will pay for
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        {/* Wave Divider */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1440 120"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
-              fill="white"
-            />
-          </svg>
-        </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-white">
+      {/* Benefits Section - Bento Grid */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Everything You Need to Validate
+              Everything You Need
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              All the tools you need to test your product idea with real users
+              Built-in tools and features to validate your product idea
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {siteConfig.landing.features.map((feature, index) => (
-              <div
-                key={index}
-                className="p-6 rounded-2xl border-2 border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </div>
-            ))}
+
+          {/* Bento Grid: 3 rows with different layouts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-scale-in delay-200">
+            {/* Row 1 */}
+            <BenefitCard
+              title="Lightning Fast"
+              description="Deploy in minutes, not days. Get your validation page live instantly."
+              icon={<Zap size={32} />}
+              className="md:col-span-1"
+            />
+            <BenefitCard
+              title="Payment Ready"
+              description="Stripe integration out of the box. Test willingness to pay."
+              icon={<Shield size={32} />}
+              className="md:col-span-1"
+            />
+            <BenefitCard
+              title="Built-in Analytics"
+              description="Track every interaction and conversion automatically."
+              icon={<BarChart size={32} />}
+              className="md:col-span-1"
+            />
+
+            {/* Row 2 - Different sizes */}
+            <BenefitCard
+              title="Waitlist Management"
+              description="Capture early interest with Clerk's powerful waitlist component. Build your launch list."
+              icon={<Users size={32} />}
+              className="lg:col-span-2 md:row-span-1"
+            />
+            <BenefitCard
+              title="Mobile Optimized"
+              description="Perfect on any device with responsive design."
+              icon={<Target size={32} />}
+              className="lg:col-span-1"
+            />
+
+            {/* Row 3 */}
+            <BenefitCard
+              title="Easy Customization"
+              description="Single config file controls all content. No hunting through code."
+              icon={<Sparkles size={32} />}
+              className="md:col-span-1"
+            />
+            <BenefitCard
+              title="Growth Focused"
+              description="Optimize for conversions with built-in best practices."
+              icon={<TrendingUp size={32} />}
+              className="md:col-span-1"
+            />
+            <BenefitCard
+              title="Support Included"
+              description="Documentation and examples to get you started fast."
+              icon={<Heart size={32} />}
+              className="md:col-span-1"
+            />
           </div>
         </div>
       </section>
 
-      {/* Comparison Table */}
-      <section className="py-20 bg-gray-50">
+      {/* How It Works Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              {siteConfig.landing.comparison.title}
+              How It Works
             </h2>
-            <p className="text-xl text-gray-600">
-              Compare features across all plans
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Three simple steps to validate your product idea
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                      Feature
-                    </th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">
-                      Starter
-                    </th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">
-                      Pro
-                    </th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">
-                      Enterprise
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {siteConfig.landing.comparison.features.map(
-                    (feature, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-sm text-gray-900">
-                          {feature.name}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {feature.starter ? (
-                            <Check className="w-5 h-5 text-green-600 mx-auto" />
-                          ) : (
-                            <span className="text-gray-300">—</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {feature.pro ? (
-                            <Check className="w-5 h-5 text-green-600 mx-auto" />
-                          ) : (
-                            <span className="text-gray-300">—</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {feature.enterprise ? (
-                            <Check className="w-5 h-5 text-green-600 mx-auto" />
-                          ) : (
-                            <span className="text-gray-300">—</span>
-                          )}
-                        </td>
-                      </tr>
-                    )
-                  )}
-                </tbody>
-              </table>
-            </div>
-            <div className="bg-gray-50 px-6 py-4 text-center">
-              <Link
-                href={siteConfig.nav.pricing}
-                className="text-blue-600 font-semibold hover:text-blue-700"
-              >
-                View detailed pricing →
-              </Link>
-            </div>
+          <div className="grid md:grid-cols-3 gap-8 animate-scale-in delay-200">
+            <HowItWorksCard
+              step={1}
+              title="Customize Your Page"
+              description="Update the config file with your product details, pricing, and features. No complex setup required."
+              icon={<ClipboardList size={40} />}
+            />
+            <HowItWorksCard
+              step={2}
+              title="Launch & Share"
+              description="Deploy to Vercel or any host in minutes. Share your validation page with potential users."
+              icon={<Rocket size={40} />}
+            />
+            <HowItWorksCard
+              step={3}
+              title="Collect Data"
+              description="Track signups, measure interest, and test pricing. Make informed decisions before building."
+              icon={<BarChart size={40} />}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Choose the plan that's right for you. Start validating today.
+            </p>
+          </div>
+
+          <div className="animate-scale-in delay-200">
+            <PricingCards showCheckout={false} />
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="/pricing"
+              className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700 text-lg"
+            >
+              View full pricing details →
+            </Link>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
               Frequently Asked Questions
             </h2>
             <p className="text-xl text-gray-600">Everything you need to know</p>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-4 animate-fade-in delay-200">
             {siteConfig.landing.faq.map((faq, index) => (
               <div
                 key={index}
-                className="border-2 border-gray-200 rounded-xl overflow-hidden"
+                className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden hover:border-blue-300 transition-colors"
               >
                 <button
                   onClick={() =>
@@ -204,78 +324,115 @@ export default function LandingPage() {
       {/* Waitlist Section */}
       <section
         id="waitlist"
-        className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white"
+        className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden"
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Join the Waitlist
-            </h2>
-            <p className="text-xl text-gray-300">
-              Be the first to know when we launch. Get early access and
-              exclusive benefits.
-            </p>
-          </div>
+        {/* Background decoration */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-600/20 via-transparent to-transparent"></div>
 
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Clerk Waitlist Component */}
-          <div className="bg-white rounded-2xl p-8 shadow-2xl">
-            <div className="text-center text-gray-900">
-              <p className="mb-6 text-lg">
-                Enter your email to join our waitlist and get early access.
-              </p>
-
-              {/* Placeholder for Clerk Waitlist - User will configure this */}
-              <div className="max-w-md mx-auto">
-                <div className="p-8 bg-blue-50 border-2 border-blue-200 rounded-xl">
-                  <p className="text-sm text-blue-900 font-medium">
-                    🔧 Configure Clerk Waitlist Here
-                  </p>
-                  <p className="text-xs text-blue-700 mt-2">
-                    Add your Clerk Waitlist component in this section.
-                    <br />
-                    Visit{" "}
-                    <a
-                      href="https://clerk.com/docs/components/waitlist"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline font-semibold"
-                    >
-                      Clerk Docs
-                    </a>{" "}
-                    for setup instructions.
-                  </p>
-                </div>
-
-                {/* Example form structure - replace with Clerk component */}
-                <form className="mt-6 space-y-4">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:outline-none"
-                    disabled
-                  />
-                  <button
-                    type="submit"
-                    className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
-                    disabled
-                  >
-                    Join Waitlist
-                  </button>
-                </form>
-              </div>
-            </div>
+          <div className="max-w-4xl mx-auto">
+            <Waitlist
+              appearance={{
+                elements: {
+                  rootBox: {
+                    width: "100%",
+                    minHeight: "500px",
+                  },
+                  cardBox: {
+                    width: "100%",
+                    padding: "none",
+                  },
+                  card: {
+                    backgroundColor: "white",
+                    padding: "3rem 2.5rem",
+                    borderRadius: "1.5rem",
+                    boxShadow:
+                      "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                    border: "1px solid rgba(226, 232, 240, 0.8)",
+                  },
+                  form: {
+                    gap: "0.5rem",
+                  },
+                  formButtonPrimary: {
+                    backgroundColor: "#2563eb",
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    padding: "1rem 1.5rem",
+                    minHeight: "3.5rem",
+                    marginTop: "1.5rem",
+                    borderRadius: "0.75rem",
+                    boxShadow:
+                      "0 4px 6px -1px rgba(37, 99, 235, 0.3), 0 2px 4px -1px rgba(37, 99, 235, 0.2)",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      backgroundColor: "#1d4ed8",
+                      transform: "translateY(-1px)",
+                      boxShadow:
+                        "0 6px 10px -1px rgba(37, 99, 235, 0.4), 0 4px 6px -1px rgba(37, 99, 235, 0.3)",
+                    },
+                    "&:active": {
+                      transform: "translateY(0)",
+                    },
+                  },
+                  formFieldInput: {
+                    fontSize: "1rem",
+                    padding: "1rem 1.25rem",
+                    minHeight: "3.5rem",
+                    borderRadius: "0.75rem",
+                    border: "2px solid #e2e8f0",
+                    backgroundColor: "#f8fafc",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      borderColor: "#cbd5e1",
+                      backgroundColor: "white",
+                    },
+                    "&:focus": {
+                      borderColor: "#2563eb",
+                      backgroundColor: "white",
+                      boxShadow: "0 0 0 3px rgba(37, 99, 235, 0.1)",
+                      outline: "none",
+                    },
+                  },
+                  formFieldLabel: {
+                    marginBottom: "0.5rem",
+                    fontSize: "0.95rem",
+                    fontWeight: "600",
+                    color: "#1e293b",
+                  },
+                  headerTitle: {
+                    fontSize: "2rem",
+                    fontWeight: "700",
+                    marginBottom: "0.75rem",
+                    color: "#0f172a",
+                    letterSpacing: "-0.025em",
+                  },
+                  headerSubtitle: {
+                    fontSize: "1.0625rem",
+                    marginBottom: "2rem",
+                    lineHeight: "1.7",
+                    color: "#64748b",
+                    fontWeight: "400",
+                  },
+                  footer: {
+                    display: "none",
+                    marginTop: "2rem",
+                    paddingTop: "1.5rem",
+                    borderTop: "1px solid #e2e8f0",
+                  },
+                },
+              }}
+            />
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12">
+      <footer className="bg-slate-900 text-gray-300 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <p className="text-sm">
-              © 2025 {siteConfig.name}. Built with Next.js, Tailwind CSS, Clerk
-              & Stripe.
-            </p>
+          <div className="text-left">
+            <p className="text-sm">© 2025 {siteConfig.name}.</p>
           </div>
         </div>
       </footer>

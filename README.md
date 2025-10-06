@@ -24,15 +24,18 @@ npm run dev
 ```
 validation_template/
 ├── app/
-│   ├── page.tsx                      # Landing page (hero, features, FAQ, waitlist)
+│   ├── page.tsx                      # Landing page (split hero, bento benefits, how it works, pricing, FAQ, waitlist)
 │   ├── demo/page.tsx                 # Interactive demo (mobile/desktop toggle)
-│   ├── pricing/page.tsx              # Pricing page with Stripe checkout
+│   ├── pricing/page.tsx              # Full pricing page with Stripe checkout
 │   ├── success/page.tsx              # Post-checkout success page
 │   ├── layout.tsx                    # Root layout with ClerkProvider
 │   └── api/create-checkout-session/  # Stripe checkout API route
 ├── components/
-│   ├── Navbar.tsx                    # Responsive navigation component
-│   └── PhoneMockup.tsx              # iPhone mockup for mobile demo
+│   ├── Navbar.tsx                    # Responsive navigation with waitlist button
+│   ├── PhoneMockup.tsx              # iPhone mockup for mobile demo
+│   ├── PricingCards.tsx             # Reusable pricing cards (landing + pricing pages)
+│   ├── BenefitCard.tsx              # Bento-style benefit cards for landing page
+│   └── HowItWorksCard.tsx           # Step cards for "How it Works" section
 ├── lib/
 │   └── stripe.ts                     # Configured Stripe SDK instance
 ├── config/
